@@ -1,0 +1,72 @@
+<div class="container mainContainer">
+    <div id="divLoading">
+        <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
+        <span class="sr-only">Loading...</span>
+    </div>
+    <h1>Users</h1><hr/>
+    <div class="btnContainer">
+        <button ng-click="initAddUser()" type="button" class="btn btn-info">Add User</button>
+    </div>
+    <div class="alert alert-danger" ng-show="users.length==0">
+       No users found.
+    </div>
+    <table class="table table-striped" ng-show="users.length>0">
+        <thead>
+            <tr>
+                <th>Firstname</th>
+                <th>Lastname</th>
+                <th>Email</th>
+                <th>Zipcode</th>
+                <th>Phone</th>
+                <th>Preferred Video Apps</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="(index,user) in users">
+                <td>{{user.firstName}}</td>
+                <td>{{user.lastName}}</td>
+                <td>{{user.email}}</td>
+                <td>{{user.zipCode}}</td>
+                <td>{{user.phone}}</td>
+                <td class="socialApps">
+                    <i title="Facebook" ng-if="(user.liveVideoApps).indexOf('Facebook') !== -1" class="fa fa-facebook-official" aria-hidden="true"></i>
+                    <i title="Youtube" ng-if="(user.liveVideoApps).indexOf('Youtube') !== -1" class="fa fa-youtube-square" aria-hidden="true"></i>
+                    <i title="Twitter" ng-if="(user.liveVideoApps).indexOf('Twitter') !== -1" class="fa fa-twitter-square" aria-hidden="true"></i>
+                    <i title="Wirestream" ng-if="(user.liveVideoApps).indexOf('Wirestream') !== -1" class="fa fa-rss-square" aria-hidden="true"></i>
+                </td>
+                <td>
+                    <div class="dropdown actionMenu">
+                        <i style="cursor:pointer" data-toggle="dropdown" class="fa fa-bars fa-lg" aria-hidden="true"></i>
+                        <ul class="dropdown-menu">
+                            <li><a ng-click="initEdit(index,user)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;Edit</a></li>
+                            <li><a ng-click="deleteUser(index,user)"><i class="fa fa-times" aria-hidden="true"></i>&nbsp;Delete</a></li>
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <hr/>
+    
+    
+    <!-- Modal Common -->  
+    <div class="modal fade"  id="modal_Common" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel"><span class="fa-stack " >
+                            <div class="fa fa-square-o fa-stack-2x"></div>
+                            <div class="fa {{modalInfo.titleIcon}} fa-stack-1x"></div>
+                        </span>&nbsp;{{modalInfo.title}}</h4>
+                </div>
+                <div class="modal-body">
+                    <div ng-include="modalInfo.url"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- -->
+    
+</div>

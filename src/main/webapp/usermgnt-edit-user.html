@@ -1,0 +1,59 @@
+<div>
+    <form name="form1" ng-submit="form1.$valid && editUser()" novalidate>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>*First Name</label>
+                    <input required="" type="text" class="form-control" maxlength="64"  ng-class="{submitted:form1.submitted}"  placeholder="First Name" ng-model="userInfoTmp.firstName" />
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>*Last Name</label>
+                    <input required="" type="text" class="form-control" maxlength="64"  ng-class="{submitted:form1.submitted}"  placeholder="Last Name" ng-model="userInfoTmp.lastName" />
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>*Email</label>
+                    <input required="" type="email" class="form-control" maxlength="64"  ng-class="{submitted:form1.submitted}"  placeholder="Email" ng-model="userInfoTmp.email" />
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Zip Code</label>
+                    <input pattern="^(0|[1-9][0-9]*)$"  type="text" class="form-control" maxlength="6"  ng-class="{submitted:form1.submitted}"  placeholder="Zip Code" ng-model="userInfoTmp.zipCode" />
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Phone number</label>
+                    <input pattern="^(0|[1-9][0-9]*)$" type="text" class="form-control" maxlength="10"  ng-class="{submitted:form1.submitted}"  placeholder="Phone" ng-model="userInfoTmp.phone" />
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label>Preferred Live Video Apps</label>
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-3" ng-repeat="app in apps">
+                                    <label class="normal">
+                                        <input type="checkbox" checklist-model="userInfoTmp.liveVideoApps" checklist-value="app"> &nbsp;{{app}}
+                                    </label>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-12">
+                <button type="submit" class="btn btn-info pull-right"  ng-click="form1.submitted = true">Update</button>
+                <button style="margin-right:10px;" type="button" class="btn btn-default pull-right"  data-dismiss="modal">Cancel</button>
+            </div>
+            
+        </div>
+    </form>
+</div>

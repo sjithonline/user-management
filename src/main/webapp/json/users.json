@@ -1,0 +1,20 @@
+[
+    {
+        "id":1,
+        "firstName" :"Sreejith",
+        "lastName":"PS",
+        "email":"sjithonline@gmail.com",
+        "zipCode":"673579",
+        "phone":"9916556976",
+        "liveVideoApps":["twitter","youtube","facebook"]
+    },
+    {
+        "id":2,
+        "firstName" :"Amirthraj",
+        "lastName":"R",
+        "email":"amir@gmail.com",
+        "zipCode":"673511",
+        "phone":"9916556976",
+        "liveVideoApps":["twitter","youtube","facebook"]
+    }
+]
