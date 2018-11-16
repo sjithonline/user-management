@@ -1,8 +1,8 @@
 (function ()
 {
-    var app = angular.module('userModule', ["checklist-model"]);
+    var app = angular.module('userModule', ["ui.bootstrap"]);
 
-    app.controller('userMgntCtrl', function($scope, $rootScope, $http,$routeParams, $route) {
+    app.controller('userMgntCtrl', function($scope, $rootScope, $http,$routeParams, $route,$uibModal) {
         
         $scope.apps =["Facebook","Youtube","Twitter","Wirestream"];
         
@@ -23,42 +23,55 @@
                         console.log(data);
                     });
         };
-        
-        //show add user popup
-        $scope.initAddUser =function(){
-            $scope.modalInfo ={
-                titleIcon:"fa-user-plus",
-                title:"Add User",
-                url:"usermgnt-add-user.html?random="+Math.random()
-            };
-            $scope.userInfo ={
-                "firstName" :"",
-                "lastName":"",
-                "email":"",
-                "zipCode":"",
-                "phone":"",
-                "liveVideoApps":[]
-            };
-            $scope.form1 = {submitted:false};
-            $('#modal_Common').modal('show');
+
+        $scope.addUserpopup = function () {
+            var modalInstance = null;
+            $scope.userInfo={};
+            function open() {
+                if (modalInstance !== null) {
+                    return;
+                }
+                modalInstance = $uibModal.open({
+                    scope: $scope,
+                    animation: true,
+                    /*size: 'lg',*/
+                    windowClass: 'video-modal-window',
+                    templateUrl: 'usermgnt-add-user.html',
+                    controller: ['$scope', '$rootScope', '$uibModalInstance', function ($scope, $rootScope, $uibModalInstance) {
+                        $scope.cancel = function () {
+                            $uibModalInstance.dismiss('cancel');
+                        };
+                        $scope.accept = function () {
+                            $uibModalInstance.close();
+                        };
+                        $scope.addUser =function(){
+                            console.log($scope.userInfo);
+                            $scope.$parent.addUser($scope.userInfo);
+                            $scope.accept();
+                        }
+                   }]
+                });
+            }
+
+            open();
         };
-        
+
+
+
         //API to create a new user
-        $scope.addUser = function() {
+        $scope.addUser = function(userObj) {
             //Call dummy create user API (Not a functional one)
             $("#divLoading").show();
-            $http.post('/user-management/api/user',$scope.userInfo)
+            $http.post('/user-management/api/user',userObj)
                     .success(function(data)
                     {
                         $("#divLoading").hide();
-                        $scope.users.push($scope.userInfo);
-                        $('#modal_Common').modal('toggle');
+                        $scope.users.push(userObj);
                     }
                     )
                     .error(function(data, status, headers)
                     {
                         $("#divLoading").hide();
-                        $('#modal_Common').modal('toggle');
                         console.log(data);
                     });
 
@@ -83,35 +96,52 @@
         };
         
         //show add user popup
-        $scope.initEdit =function(index,user){
-            $scope.userIndex = index;
-            $scope.modalInfo ={
-                titleIcon:"fa-pencil",
-                title:"Edit User",
-                url:"usermgnt-edit-user.html?random="+Math.random()
-            };
-            $scope.userInfoTmp =  jQuery.extend(true, {}, user);//Deep Copy
-            $scope.form1 = {submitted:false};
-            $('#modal_Common').modal('show');
+
+        $scope.initEditPopup =function(index,user){
+            var modalInstance = null;
+            function open() {
+                if (modalInstance !== null) {
+                    return;
+                }
+                modalInstance = $uibModal.open({
+                    scope: $scope,
+                    animation: true,
+                    /*size: 'lg',*/
+                    templateUrl: 'usermgnt-edit-user.html',
+                    controller: ['$scope', '$rootScope', '$uibModalInstance', function ($scope, $rootScope, $uibModalInstance) {
+                        $scope.userInfoTmp =  jQuery.extend(true, {}, user);//Deep Copy
+                        $scope.cancel = function () {
+                           $uibModalInstance.dismiss('cancel');
+                        };
+                        $scope.accept = function () {
+                           $uibModalInstance.close();
+                        };
+                        $scope.editUser =function(){
+                           $scope.$parent.editUser(index,$scope.userInfoTmp);
+                           $scope.accept();
+                        }
+                   }]
+                });
+            }
+
+            open();
         };
-        
+
+
         //edit selected user
-        $scope.editUser = function() {
+        $scope.editUser = function(index,userInfo) {
             //Call dummy edit user API
             $("#divLoading").show();
-            $http.put('/user-management/api/user',$scope.userInfoTmp)
+            $http.put('/user-management/api/user',userInfo)
                     .success(function(data)
                     {
                         $("#divLoading").hide();
-                        ($scope.users)[$scope.userIndex] = $scope.userInfoTmp;
-                        $('#modal_Common').modal('toggle');
+                        ($scope.users)[index] = userInfo
                     }
                     )
                     .error(function(data, status, headers)
                     {
                         $("#divLoading").hide();
-                        $('#modal_Common').modal('toggle');
-                        console.log(data);
                     });
         };
         

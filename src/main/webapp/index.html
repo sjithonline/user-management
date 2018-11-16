@@ -11,14 +11,19 @@
     <script src="js/checklist-model.js"></script>
     <script src="js/userManagement.js"></script>
     <link href="js/bootstrap-3.3.7/css/bootstrap.css" rel="stylesheet"/>
-    <script src="js/bootstrap-3.3.7/js/bootstrap.js"></script>
+    <!--<script src="js/bootstrap-3.3.7/js/bootstrap.js"></script>-->
+    <script src="js/ui-bootstrap-tpls-2.5.0.js"></script>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/responsive.css">
     
-
     <body>
+        <div class="menu" style="background-color:#ccc;height:20px;">
+            <span><a href="#/view-users">USER (v.1.6)</a></span> | <span href="#/view-roles">ROLES (v.7)</span>
+        </div>
+
         <div ng-app="myApp">
             <ng-view></ng-view>
         </div>
     </body>
+
 </html>

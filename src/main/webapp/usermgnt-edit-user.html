@@ -1,4 +1,7 @@
-<div>
+<div class="modal-header ng-scope">
+    <h3 class="modal-title" id="modal-title">Edit User</h3>
+</div>
+<div style="padding:30px">
     <form name="form1" ng-submit="form1.$valid && editUser()" novalidate>
         <div class="row">
             <div class="col-md-6">
@@ -50,8 +53,8 @@
             </div>
             
             <div class="col-md-12">
+                <button style="margin-right:10px;" type="button" class="btn btn-default pull-right"  ng-click="cancel()">Cancel</button>
                 <button type="submit" class="btn btn-info pull-right"  ng-click="form1.submitted = true">Update</button>
-                <button style="margin-right:10px;" type="button" class="btn btn-default pull-right"  data-dismiss="modal">Cancel</button>
             </div>
             
         </div>
